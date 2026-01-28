@@ -18,6 +18,7 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
+    "@commitlint/cli": "9.1.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
     "@types/node": "^25.0.2",
@@ -26,8 +27,10 @@
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "babel-loader": "^8.2.3",
+    "commitizen": "^4.3.1",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.2.0",
+    "cz-customizable": "6.2.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.2",
     "eslint-import-resolver-typescript": "^3.10.1",
@@ -38,6 +41,8 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "4.2.3",
+    "listr2": "3.8.1",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.4",
     "postcss-loader": "^6.2.1",
@@ -59,7 +64,8 @@
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "lint": "eslint src",
-    "analyze": "ANALYZE=true webpack --mode production"
+    "analyze": "ANALYZE=true webpack --mode production",
+    "commit": "git add . && npx git-cz"
   },
   "browserslist": {
     "production": [
@@ -72,5 +78,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node config/precommit-runner/runner.js && git add . && npm run build:storybook && npm run test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g config/git/commitlint.js",
+      "prepare-commit-msg": "node ./config/git/prepare-commit.js"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/git/commitizen.js"
+    }
   }
 }
