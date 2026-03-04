@@ -1,15 +1,57 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["DOM", "ES2020"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    // Куда компилировать результат TypeScript
+    "outDir": "build/dist",
+    // // Система модулей, которую использует компилятор
+    // "module": "commonjs", // Node.js использует CommonJS
+    // // Версия JavaScript, в которую компилируется TS
+    // "target": "es5", // Старый стандарт, совместимый с большинством браузеров
+// заменя для работы import.meta.url
+    "module": "esnext",
+    "target": "esnext",
+    // Какие библиотеки подключены автоматически (типы и глобальные объекты)
+    "lib": [
+      "es6",
+      "dom"
+    ], // ES6 и API браузера (document, window и т.д.)
+    // Генерация source map для отладки
+    "sourceMap": true, // Позволяет видеть исходный TypeScript в дебаггере
+    // Разрешить компилировать обычный JavaScript вместе с TypeScript
+    "allowJs": true,
+    // Тип JSX (React) в проектах с TSX. Также нужен для Babel 
     "jsx": "react-jsx",
-    "strict": true,
+    // Как TypeScript ищет модули
+    "moduleResolution": "node", // Node.js-стиль поиска модулей
+    // Корневая папка исходного кода
+    "rootDir": "src",
+    // Не позволять функции завершаться без return там, где ожидается возвращаемое значение
+    "noImplicitReturns": true,
+    // Запрещает использование this без явного типа
+    "noImplicitThis": true,
+    // Запрещает неявный any (любые типы должны быть явными или выводимыми)
+    "noImplicitAny": true,
+    // Проверка на null и undefined
+    "strictNullChecks": true,
+    // Разрешить default-импорты из CommonJS модулей (React и др.)
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "allowSyntheticDefaultImports": true,
+
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules", // Не компилировать зависимости
+    "build", // Не компилировать выходные файлы
+    "scripts", // Вспомогательные скрипты компилировать не нужно
+    "acceptance-tests", // Тесты при компиляции исключены
+    "webpack", // Конфиги и сборка не трогаются
+    "jest", // Тестовый фреймворк не компилируется
+    "config", // CRA-конфиги (включая env.js) не компилируем
+    "src/setupTests.ts" // Файл инициализации тестов исключается
+  ],
+  // Дополнительные глобальные типы
+  "types": [
+    "typePatches" // Дополнительные кастомные типы
+  ]
 }

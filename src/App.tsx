@@ -1,5 +1,11 @@
+import { StrictMode } from 'react';
+
 const App = () => {
-  return <h1>New platform is alive</h1>;
+  return (
+    <StrictMode>
+      <h1>New platform is dead</h1>
+    </StrictMode>
+  );
 };
 
 export default App;
